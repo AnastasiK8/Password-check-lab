@@ -38,7 +38,7 @@ def test_password_edge_case_exact_length():
 
 
 def test_password_common_is_rejected():
-    # Навіть якщо формально довгий і містить цифри - поширений пароль недійсний
+    # Навіть якщо довгий і містить цифри - поширений пароль недійсний
     assert is_strong_password("Password1") is True  # не зі списку - валідний
     assert is_strong_password("password1") is False  # з урахуванням списку і регістру
 
@@ -74,7 +74,7 @@ def test_is_common_password():
 
 
 def test_password_strength_score_weak():
-    assert password_strength_score("abc") == 1  # тільки довжина < 8 не рахується, лишається 0... див. нижче
+    assert password_strength_score("abc") == 1 
     assert password_strength_score("password") == 0  # поширений пароль
 
 
