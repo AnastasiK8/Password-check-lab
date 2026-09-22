@@ -75,7 +75,7 @@ def test_is_common_password():
 
 def test_password_strength_score_weak():
     assert password_strength_score("abc") == 0
-    assert password_strength_score("password") == 0 
+    assert password_strength_score("password") == 0
 
 
 def test_password_strength_score_strong():
