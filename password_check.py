@@ -27,7 +27,7 @@ def is_strong_password(p):
     if not isinstance(p, str):
         raise TypeError("Пароль має бути рядком (str)")
 
-    if len(p) < 800:
+    if len(p) < 8:
         return False
 
     if p.lower() in COMMON_PASSWORDS:
