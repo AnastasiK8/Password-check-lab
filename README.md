@@ -1,4 +1,6 @@
 ![CI](https://github.com/AnastasiK8/Password-check-lab/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/python-3.13-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 # Password-check-lab
 
 ## Опис
