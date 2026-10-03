@@ -15,3 +15,7 @@
 
 docker pull ghcr.io/anastasik8/ci-lab-app:latest
 docker run --rm ghcr.io/anastasik8/ci-lab-app:latest
+
+## Запуск через Docker Compose
+
+docker compose up --build
