@@ -1,0 +1,5 @@
+services:
+  password-check-app:
+    build: .
+    image: password-check-app:local
+    container_name: password-check-app
