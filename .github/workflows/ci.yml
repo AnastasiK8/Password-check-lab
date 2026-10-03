@@ -55,7 +55,7 @@ jobs:
       - name: Зібрати Docker-образ (крок "Package")
         run: |
           IMAGE=ghcr.io/anastasik8/ci-lab-app
-          docker build -t $IMAGE:${{ github.sha }} -t $IMAGE:latest .
+          docker build -t $IMAGE:${{ github.sha }} -t $IMAGE:latest -t $IMAGE:v1.0.0 .
 
       - name: Завантажити образ у реєстр
         run: |
