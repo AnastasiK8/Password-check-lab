@@ -10,3 +10,8 @@
 
 При кожному push і pull request у гілку `main` автоматично запускається CI
 (`.github/workflows/ci.yml`), який встановлює залежності й запускає тести.
+
+## Запуск через Docker
+
+docker pull ghcr.io/anastasik8/ci-lab-app:latest
+docker run --rm ghcr.io/anastasik8/ci-lab-app:latest
