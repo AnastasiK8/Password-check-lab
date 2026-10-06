@@ -19,3 +19,11 @@ docker run --rm ghcr.io/anastasik8/ci-lab-app:latest
 ## Запуск через Docker Compose
 
 docker compose up --build
+
+## CI/CD-конвеєр
+
+Source -> Build -> Test -> Package -> Deploy
+
+При кожному push у гілку main автоматично: встановлюються залежності,
+запускаються тести, збирається й публікується Docker-образ у GHCR,
+після чого Terraform розгортає цей образ і перевіряє результат.
