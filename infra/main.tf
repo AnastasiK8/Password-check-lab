@@ -15,7 +15,7 @@ resource "docker_image" "app" {
 
 resource "docker_container" "app" {
   name     = "ci-lab-deploy"
-  image    = docker_image.app.image_id   # виправлена навмисна помилка: іamge
+  image    = docker_image.app.image_id # виправлена навмисна помилка: іamge
   command  = ["pytest", "-v"]
   rm       = true
   must_run = false
