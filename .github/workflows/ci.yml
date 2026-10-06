@@ -63,7 +63,7 @@ jobs:
           docker push $IMAGE:${{ github.sha }}
           docker push $IMAGE:latest
           docker push $IMAGE:v1.0.0
-          
+
  deploy:
     needs: build-and-push-image
     if: github.event_name == 'push'
