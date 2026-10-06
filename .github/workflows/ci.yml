@@ -89,6 +89,10 @@ jobs:
         working-directory: infra
         run: terraform init
 
+      - name: Перевірити форматування Terraform (terraform fmt)
+        working-directory: infra
+        run: terraform fmt -check
+
       - name: terraform apply
         working-directory: infra
         run: |
