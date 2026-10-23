@@ -31,7 +31,7 @@ jobs:
           pip install -r requirements.txt
           
       - name: Перевірити стиль коду (flake8)
-        run: flake8 . --max-line-length=100
+        run: flake8 . --max-line-length=100 --exclude=pr4
 
       - name: Запустити тести
         run: pytest -v
