@@ -7,6 +7,8 @@ CREATE TABLE water (
     q        real        NOT NULL CHECK (q BETWEEN 0 AND 500),
     alarm    smallint    NOT NULL CHECK (alarm IN (0, 1)),
     lag_ms   integer     NOT NULL,
+	q_ema   real,
+	dq      real,
     PRIMARY KEY (station, ts)
 );
 CREATE INDEX water_ts_idx ON water (ts);
