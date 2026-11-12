@@ -17,6 +17,14 @@ jobs:
       matrix:
         python-version: ["3.11", "3.12", "3.13"]
     steps:
+      - name: Eco CI — старт вимірювання
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: start-measurement
+          send-data: false
+          co2-calculation-method: constant
+          co2-grid-intensity-constant: 458
+
       - name: Отримати код репозиторію
         uses: actions/checkout@v4
 
@@ -29,12 +37,36 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          
+
+      - name: Eco CI — install
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: get-measurement
+          label: install
+
       - name: Перевірити стиль коду (flake8)
         run: flake8 . --max-line-length=100 --exclude=.venv,pr4,pr5,pr6
 
+      - name: Eco CI — flake8
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: get-measurement
+          label: flake8
+
       - name: Запустити тести
         run: pytest -v
+
+      - name: Eco CI — tests
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: get-measurement
+          label: tests
+
+      - name: Eco CI — підсумок
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: display-results
+          display-badge: false
   
   build-and-push-image:
     needs: build-and-test
@@ -44,6 +76,14 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Eco CI — старт вимірювання
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: start-measurement
+          send-data: false
+          co2-calculation-method: constant
+          co2-grid-intensity-constant: 458
+
       - name: Отримати код репозиторію
         uses: actions/checkout@v4
 
@@ -57,12 +97,30 @@ jobs:
           IMAGE=ghcr.io/anastasik8/ci-lab-app
           docker build -t $IMAGE:${{ github.sha }} -t $IMAGE:latest -t $IMAGE:v1.0.0 .
 
+      - name: Eco CI — docker-build
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: get-measurement
+          label: docker-build
+
       - name: Завантажити образ у реєстр
         run: |
           IMAGE=ghcr.io/anastasik8/ci-lab-app
           docker push $IMAGE:${{ github.sha }}
           docker push $IMAGE:latest
           docker push $IMAGE:v1.0.0
+
+      - name: Eco CI — docker-push
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: get-measurement
+          label: docker-push
+
+      - name: Eco CI — підсумок
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: display-results
+          display-badge: false
 
   deploy:
     needs: build-and-push-image
@@ -72,6 +130,14 @@ jobs:
       contents: read
       packages: read
     steps:
+      - name: Eco CI — старт вимірювання
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: start-measurement
+          send-data: false
+          co2-calculation-method: constant
+          co2-grid-intensity-constant: 458
+
       - name: Отримати код репозиторію
         uses: actions/checkout@v4
 
@@ -100,12 +166,24 @@ jobs:
           IMAGE="$IMAGE/ci-lab-app:${{ github.sha }}"
           terraform apply -auto-approve -var="image_name=$IMAGE"
 
+      - name: Eco CI — terraform-apply
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: get-measurement
+          label: terraform-apply
+
       - name: Перевірити результат розгортання (smoke-test)
         run: |
           docker logs ci-lab-deploy
           EXIT_CODE=$(docker inspect ci-lab-deploy --format='{{.State.ExitCode}}')
           echo "Код завершення контейнера: $EXIT_CODE"
           test "$EXIT_CODE" -eq 0
+
+      - name: Eco CI — smoke-test
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: get-measurement
+          label: smoke-test
 
       - name: terraform destroy
         if: always()
@@ -115,3 +193,10 @@ jobs:
           IMAGE="ghcr.io/anastasik8"
           IMAGE="$IMAGE/ci-lab-app:${{ github.sha }}"
           terraform destroy -auto-approve -var="image_name=$IMAGE"
+
+      - name: Eco CI — підсумок
+        if: always()
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5.3.0
+        with:
+          task: display-results
+          display-badge: false
